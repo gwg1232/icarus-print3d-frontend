@@ -13,3 +13,7 @@
 
 ### 백엔드
 - 백엔드 구현 요구사항을 `README.md`에 작성하면 별도의 백엔드 프로젝트에서 외부 API로 구현할 예정
+
+### 참고사이트
+- https://manufarm.com/autoquote/
+- https://creallo.com/ko

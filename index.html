@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICARUS 3D - 초고강도 3D 프린팅 서비스</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #092C5E 0%, #4980C1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, #092C5E 0%, #4980C1 100%);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- 네비게이션 -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-[#092C5E]">ICARUS 3D</div>
+                <div class="flex gap-8">
+                    <a href="#features" class="text-gray-700 hover:text-[#092C5E] transition">특징</a>
+                    <a href="#performance" class="text-gray-700 hover:text-[#092C5E] transition">성능</a>
+                    <a href="#technology" class="text-gray-700 hover:text-[#092C5E] transition">기술</a>
+                    <a href="#cases" class="text-gray-700 hover:text-[#092C5E] transition">사례</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-[#092C5E] transition">가격</a>
+                    <button class="bg-[#F28347] text-white px-6 py-2 rounded-lg hover:bg-[#D94925] transition"
+                            hx-get="/api/quote-form"
+                            hx-target="#modal-container"
+                            hx-swap="innerHTML">견적 문의</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="pt-24 pb-20 bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6 text-[#092C5E] leading-tight">
+                    연속섬유강화 기술로<br>
+                    CNC급 강도를 출력해보세요
+                </h1>
+                <p class="text-xl text-gray-600 mb-10">
+                    플라스틱을 초월한 강도, 알루미늄급 성능을 3D 프린팅으로 구현합니다
+                </p>
+                <div class="flex gap-4 justify-center">
+                    <a href="#instant-quote" class="bg-[#092C5E] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#4980C1] transition">
+                        즉시 견적 받기
+                    </a>
+                    <button class="border-2 border-[#092C5E] text-[#092C5E] px-8 py-4 rounded-lg text-lg hover:bg-[#092C5E] hover:text-white transition">
+                        기술 자료 다운로드
+                    </button>
+                </div>
+            </div>
+
+            <!-- 주요 특징 카드 -->
+            <div id="features" class="grid grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
+                    <div class="text-4xl mb-4">💪</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#092C5E]">금속에 버금가는 강도</h3>
+                    <p class="text-gray-600">알루미늄급 강도와 내구성을 플라스틱 무게로 구현</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#092C5E]">합리적인 비용</h3>
+                    <p class="text-gray-600">표준 3D 프린팅과 유사한 비용으로 초고강도 부품 제작</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
+                    <div class="text-4xl mb-4">📏</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#092C5E]">정밀한 공차</h3>
+                    <p class="text-gray-600">±0.2mm / 0.5% 공차로 설계값 그대로 구현</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#092C5E]">검증된 신뢰성</h3>
+                    <p class="text-gray-600">NASA 탐사로봇, 제트기 부품, 산업용 로봇에 실제 적용</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 즉시 견적 섹션 -->
+    <section id="instant-quote" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-[#092C5E]">
+                AI 즉시 견적 시스템
+            </h2>
+            <p class="text-xl text-gray-600 text-center mb-12">
+                3D 파일을 업로드하고 1분 안에 견적을 받아보세요
+            </p>
+
+            <div class="bg-gray-50 rounded-2xl p-8">
+                <div class="grid grid-cols-2 gap-8">
+                    <!-- 파일 업로드 영역 -->
+                    <div>
+                        <div class="bg-white rounded-xl border-2 border-dashed border-gray-300 p-12 text-center hover:border-[#092C5E] transition">
+                            <form hx-post="/api/file/validate"
+                                  hx-trigger="change from:#file-upload"
+                                  hx-target="#file-info"
+                                  hx-swap="outerHTML"
+                                  hx-encoding="multipart/form-data">
+                                <input type="file" id="file-upload" name="file" accept=".stl,.obj,.stp,.step,.3mf" class="hidden">
+                                <label for="file-upload" class="cursor-pointer">
+                                    <div class="mb-4">
+                                        <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                        </svg>
+                                    </div>
+                                    <p class="text-xl font-bold text-[#092C5E] mb-2">3D 파일을 드래그하거나 클릭하여 업로드</p>
+                                    <p class="text-gray-600 mb-4">STL, OBJ, STEP, 3MF 지원</p>
+                                    <p class="text-sm text-gray-500">최대 파일 크기: 100MB</p>
+                                </label>
+                            </form>
+                        </div>
+
+                        <!-- 파일 정보 표시 영역 -->
+                        <div id="file-info" class="hidden mt-4 bg-white rounded-xl p-6 shadow-lg">
+                            <h3 class="font-bold text-lg mb-4 text-[#092C5E]">파일 정보</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">파일명:</span>
+                                    <span id="file-name" class="font-medium">-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">크기:</span>
+                                    <span id="file-size" class="font-medium">-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">치수:</span>
+                                    <span id="model-dimensions" class="font-medium">분석 중...</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">부피:</span>
+                                    <span id="model-volume" class="font-medium">분석 중...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 옵션 선택 영역 -->
+                    <div>
+                        <!-- 소재 선택 -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-4 text-[#092C5E]">소재 선택</h3>
+                            <div class="space-y-3"
+                                 hx-post="/api/price/calculate"
+                                 hx-trigger="change from:input[name='material'], change from:#quantity, change from:#layer-height, change from:#infill"
+                                 hx-target="#price-result"
+                                 hx-include="#file-upload, #quantity, #layer-height, #infill">
+                                <label class="block cursor-pointer">
+                                    <input type="radio" name="material" value="onyx" class="hidden peer" checked>
+                                    <div class="border-2 border-gray-200 rounded-lg p-4 peer-checked:border-[#092C5E] peer-checked:bg-blue-50 transition">
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <p class="font-bold text-[#092C5E]">Onyx (탄소섬유 나일론)</p>
+                                                <p class="text-sm text-gray-600">기본 강도, 매끈한 표면</p>
+                                            </div>
+                                            <span class="text-lg font-bold text-[#F28347]">₩150/g</span>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="block cursor-pointer">
+                                    <input type="radio" name="material" value="fiberglass" class="hidden peer">
+                                    <div class="border-2 border-gray-200 rounded-lg p-4 peer-checked:border-[#092C5E] peer-checked:bg-blue-50 transition">
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <p class="font-bold text-[#092C5E]">Fiberglass (유리섬유)</p>
+                                                <p class="text-sm text-gray-600">10배 강도, 높은 강성</p>
+                                            </div>
+                                            <span class="text-lg font-bold text-[#F28347]">₩250/g</span>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="block cursor-pointer">
+                                    <input type="radio" name="material" value="carbon" class="hidden peer">
+                                    <div class="border-2 border-gray-200 rounded-lg p-4 peer-checked:border-[#092C5E] peer-checked:bg-blue-50 transition">
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <p class="font-bold text-[#092C5E]">Carbon Fiber (탄소섬유)</p>
+                                                <p class="text-sm text-gray-600">알루미늄급 강도, 초경량</p>
+                                            </div>
+                                            <span class="text-lg font-bold text-[#F28347]">₩450/g</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 추가 옵션 -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-4 text-[#092C5E]">추가 옵션</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <label for="quantity" class="text-gray-700">수량</label>
+                                    <input type="number" id="quantity" min="1" value="1" class="w-24 px-3 py-2 border rounded-lg focus:outline-none focus:border-[#092C5E]">
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label for="layer-height" class="text-gray-700">레이어 두께</label>
+                                    <select id="layer-height" class="px-3 py-2 border rounded-lg focus:outline-none focus:border-[#092C5E]">
+                                        <option value="0.1">0.1mm (정밀)</option>
+                                        <option value="0.15" selected>0.15mm (표준)</option>
+                                        <option value="0.2">0.2mm (빠름)</option>
+                                    </select>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label for="infill" class="text-gray-700">충전율</label>
+                                    <div class="flex items-center gap-2">
+                                        <input type="range" id="infill" min="20" max="100" value="50" class="w-32">
+                                        <span id="infill-value" class="w-12 text-right">50%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 견적 결과 -->
+                        <div id="price-result" class="bg-gradient-to-br from-[#092C5E] to-[#4980C1] rounded-xl p-6 text-white">
+                            <h3 class="font-bold text-xl mb-4">예상 견적</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span>재료비</span>
+                                    <span id="material-cost">₩0</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>출력 시간</span>
+                                    <span id="print-time">-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>인건비</span>
+                                    <span id="labor-cost">₩0</span>
+                                </div>
+                                <div class="border-t border-white/30 pt-3 mt-3">
+                                    <div class="flex justify-between text-xl font-bold">
+                                        <span>총 견적</span>
+                                        <span id="total-cost">₩0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="w-full bg-[#F28347] text-white py-3 rounded-lg mt-6 font-bold hover:bg-[#D94925] transition"
+                                    hx-post="/api/quote"
+                                    hx-include="#file-upload, input[name='material'], #quantity, #layer-height, #infill"
+                                    hx-swap="outerHTML">
+                                정식 견적 요청
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D 모델 미리보기 영역 -->
+                <div class="mt-8">
+                    <div class="bg-white rounded-xl p-6 shadow-lg">
+                        <h3 class="font-bold text-lg mb-4 text-[#092C5E]">3D 모델 미리보기</h3>
+                        <div class="bg-gray-100 rounded-lg h-96 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                                </svg>
+                                <p class="text-gray-500">3D 파일을 업로드하면 여기에 모델이 표시됩니다</p>
+                                <p class="text-sm text-gray-400 mt-2">마우스로 회전, 확대/축소 가능</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mt-4">
+                            <button class="bg-gray-100 py-2 rounded-lg hover:bg-gray-200 transition">
+                                <span class="text-gray-700">전면</span>
+                            </button>
+                            <button class="bg-gray-100 py-2 rounded-lg hover:bg-gray-200 transition">
+                                <span class="text-gray-700">측면</span>
+                            </button>
+                            <button class="bg-gray-100 py-2 rounded-lg hover:bg-gray-200 transition">
+                                <span class="text-gray-700">등각</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로세스 안내 -->
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold text-center mb-8 text-[#092C5E]">간단한 3단계 프로세스</h3>
+                    <div class="grid grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-[#F28347] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">파일 업로드</h4>
+                            <p class="text-gray-600">3D 모델 파일을 업로드하고 AI가 자동으로 분석합니다</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-[#4980C1] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">옵션 선택</h4>
+                            <p class="text-gray-600">소재, 수량, 마감 옵션을 선택하세요</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-[#092C5E] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">즉시 견적</h4>
+                            <p class="text-gray-600">1분 안에 정확한 견적을 받아보세요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 성능 비교 섹션 -->
+    <section id="performance" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-[#092C5E]">
+                한 눈에 보는 초경량·초고강도 제품 성능 비교
+            </h2>
+            <p class="text-xl text-gray-600 text-center mb-12">
+                플라스틱을 초월한 강도, 연속섬유로 알루미늄급까지
+            </p>
+
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Onyx 카드 -->
+                <div class="bg-white rounded-xl p-8 shadow-lg">
+                    <div class="bg-gray-100 rounded-lg p-4 mb-6">
+                        <h3 class="text-2xl font-bold text-[#092C5E] mb-2">탄소섬유 나일론</h3>
+                        <p class="text-lg text-gray-600">Onyx</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">강도</span>
+                            <span class="font-bold text-[#F28347]">ABS 대비 1.4배</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">견고함</span>
+                            <span class="font-bold text-[#F28347]">ABS 대비 3배</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mt-4">
+                            <div class="bg-[#4980C1] h-3 rounded-full" style="width: 30%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">보통 강성</p>
+                    </div>
+                </div>
+
+                <!-- Fiberglass 카드 -->
+                <div class="bg-white rounded-xl p-8 shadow-lg border-2 border-[#F28347]">
+                    <div class="bg-orange-50 rounded-lg p-4 mb-6">
+                        <h3 class="text-2xl font-bold text-[#092C5E] mb-2">유리섬유강화소재</h3>
+                        <p class="text-lg text-gray-600">Fiberglass</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">강도</span>
+                            <span class="font-bold text-[#F28347]">ABS 대비 10배</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">견고함</span>
+                            <span class="font-bold text-[#F28347]">ABS 대비 30배</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mt-4">
+                            <div class="bg-[#F28347] h-3 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">우수한 강성</p>
+                    </div>
+                </div>
+
+                <!-- Carbon Fiber 카드 -->
+                <div class="bg-gradient-to-br from-[#092C5E] to-[#4980C1] rounded-xl p-8 shadow-xl text-white">
+                    <div class="bg-white/20 backdrop-blur rounded-lg p-4 mb-6">
+                        <h3 class="text-2xl font-bold mb-2">탄소섬유강화소재</h3>
+                        <p class="text-lg">Carbon Fiber</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span>강도</span>
+                            <span class="font-bold text-yellow-300">알루미늄급</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>무게</span>
+                            <span class="font-bold text-yellow-300">알루미늄의 40%</span>
+                        </div>
+                        <div class="w-full bg-white/30 rounded-full h-3 mt-4">
+                            <div class="bg-yellow-300 h-3 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <p class="text-sm mt-2">최고 강성</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CFF 기술 설명 섹션 -->
+    <section id="technology" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 text-[#092C5E]">
+                연속섬유강화(CFF) 핵심 기술
+            </h2>
+
+            <div class="grid grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-[#092C5E]">기술 원리</h3>
+                    <p class="text-lg text-gray-700 mb-6">
+                        탄소섬유 나일론(Onyx) 내부에 연속섬유 경로를 형성해 강한 구조를 생성합니다.
+                        하중이 집중되는 구간에 연속섬유를 보강하여 크게 향상된 강도와 강성을 제공합니다.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 bg-[#F28347] rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-bold text-[#092C5E] mb-1">일반 3D 프린팅의 한계 보완</h4>
+                                <p class="text-gray-600">적층 특성상 낮은 강도와 방향성 문제를 연속섬유로 해결</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 bg-[#F28347] rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-bold text-[#092C5E] mb-1">효율적인 구조 설계</h4>
+                                <p class="text-gray-600">필요한 부분에만 섬유를 보강하여 무게 대비 최고의 강도 구현</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 bg-[#F28347] rounded-full mt-2"></div>
+                            <div>
+                                <h4 class="font-bold text-[#092C5E] mb-1">정밀 부품 생산 특화</h4>
+                                <p class="text-gray-600">기본 소재만으로도 강하고 튼튼하여 정밀한 부품 생산에 최적화</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-8">
+                    <h3 class="text-xl font-bold mb-6 text-[#092C5E]">기존 FDM vs 연속섬유강화</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg p-6">
+                            <h4 class="font-bold text-red-600 mb-3">❌ 기존 FDM 방식</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>• 적층 특성상 상대적으로 낮은 강도</li>
+                                <li>• 민감한 방향성으로 인한 제약</li>
+                                <li>• 하중 지지 능력 한계</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-50 to-orange-50 rounded-lg p-6">
+                            <h4 class="font-bold text-green-600 mb-3">✅ 연속섬유강화 CFF</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• 하중 집중 구간에 연속섬유 보강</li>
+                                <li>• 크게 향상된 강도와 강성</li>
+                                <li>• 방향성 문제 해결</li>
+                                <li>• 알루미늄급 성능 달성</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 초고강도 성능 입증 섹션 -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 text-[#092C5E]">초고강도 성능 입증</h2>
+
+            <div class="bg-white rounded-2xl shadow-xl p-12">
+                <p class="text-xl text-gray-700 mb-8 text-center">
+                    탄소섬유 나일론(Onyx) 기반에 연속섬유를 삽입한 CFF 복합 구조로<br>
+                    알루미늄 수준의 초고강도를 자랑합니다
+                </p>
+
+                <div class="grid grid-cols-3 gap-8 mb-12">
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-[#F28347] mb-2">알루미늄급</div>
+                        <p class="text-lg text-gray-600">강도 달성</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-[#4980C1] mb-2">최소 변형</div>
+                        <p class="text-lg text-gray-600">동일 하중 대비</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-[#092C5E] mb-2">높은 하중</div>
+                        <p class="text-lg text-gray-600">지지 능력</p>
+                    </div>
+                </div>
+
+                <!-- 강도 비교 차트 -->
+                <div class="bg-gray-50 rounded-xl p-8">
+                    <h3 class="text-xl font-bold mb-6 text-[#092C5E]">소재별 강도 비교</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-gray-700">일반 플라스틱</span>
+                            <div class="flex-1 bg-gray-200 rounded-full h-8">
+                                <div class="bg-gray-400 h-8 rounded-full flex items-center justify-end pr-4" style="width: 15%">
+                                    <span class="text-white text-sm font-bold">1x</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-gray-700">Onyx</span>
+                            <div class="flex-1 bg-gray-200 rounded-full h-8">
+                                <div class="bg-[#4980C1] h-8 rounded-full flex items-center justify-end pr-4" style="width: 40%">
+                                    <span class="text-white text-sm font-bold">3x</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-32 text-gray-700 font-bold">Onyx + CFF</span>
+                            <div class="flex-1 bg-gray-200 rounded-full h-8">
+                                <div class="bg-gradient-to-r from-[#F28347] to-[#D94925] h-8 rounded-full flex items-center justify-end pr-4" style="width: 95%">
+                                    <span class="text-white text-sm font-bold">알루미늄급</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 정밀도 및 활용 사례 섹션 -->
+    <section id="cases" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-[#092C5E]">
+                설계 그대로의 완성도 - 정밀도
+            </h2>
+            <p class="text-xl text-gray-600 text-center mb-12">
+                산업용 프린트 수준의 공차 ±0.2mm/0.5%
+            </p>
+
+            <div class="grid grid-cols-2 gap-12 mb-16">
+                <div class="bg-gray-50 rounded-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-[#092C5E]">정밀도가 만드는 차이</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl">⚙️</span>
+                            <div>
+                                <h4 class="font-bold text-[#092C5E] mb-1">설계값과 실제값 일치</h4>
+                                <p class="text-gray-600">조립 후 추가 수정 및 가공을 최소화</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl">⚡</span>
+                            <div>
+                                <h4 class="font-bold text-[#092C5E] mb-1">빠른 활용</h4>
+                                <p class="text-gray-600">부품을 보다 빠르고 깔끔하게 활용 가능</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl">✨</span>
+                            <div>
+                                <h4 class="font-bold text-[#092C5E] mb-1">높은 마감 퀄리티</h4>
+                                <p class="text-gray-600">수정 시간 단축, 완벽한 표면 품질</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-[#092C5E] to-[#4980C1] rounded-xl p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-6">공차 사양</h3>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-3xl font-bold mb-2">±0.2mm</p>
+                            <p class="text-sm opacity-90">치수 공차</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-3xl font-bold mb-2">0.5%</p>
+                            <p class="text-sm opacity-90">상대 공차</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-3xl font-bold mb-2">0.10mm</p>
+                            <p class="text-sm opacity-90">최소 레이어</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-3xl font-bold mb-2">320mm</p>
+                            <p class="text-sm opacity-90">최대 크기</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 실제 활용 사례 -->
+            <div>
+                <h3 class="text-3xl font-bold text-center mb-8 text-[#092C5E]">실제 활용 사례</h3>
+                <div class="grid grid-cols-4 gap-6">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                        <div class="h-40 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                            <span class="text-6xl">🤖</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">Haddington Dynamics</h4>
+                            <p class="text-gray-600">산업용 로봇 팔</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                        <div class="h-40 bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                            <span class="text-6xl">🚀</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">NASA JPL Team</h4>
+                            <p class="text-gray-600">탐사로봇 CoSTAR</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                        <div class="h-40 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                            <span class="text-6xl">🔧</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">Wärtsilä</h4>
+                            <p class="text-gray-600">산업용 리프팅 툴</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                        <div class="h-40 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
+                            <span class="text-6xl">✈️</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2 text-[#092C5E]">Cabin Management</h4>
+                            <p class="text-gray-600">제트기 부품</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 서비스 사양 및 가격 정책 섹션 -->
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 text-[#092C5E]">
+                서비스 사양 및 가격 정책
+            </h2>
+
+            <div class="grid grid-cols-2 gap-12">
+                <!-- 기술 사양 -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-[#092C5E]">기술 사양</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center pb-4 border-b">
+                            <span class="text-gray-700">레이어 두께</span>
+                            <span class="font-bold text-[#092C5E]">0.10–0.20mm</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b">
+                            <span class="text-gray-700">공차</span>
+                            <span class="font-bold text-[#092C5E]">±0.2mm/0.5%</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b">
+                            <span class="text-gray-700">최대 출력 크기</span>
+                            <span class="font-bold text-[#092C5E]">320 x 132 x 154 mm</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b">
+                            <span class="text-gray-700">보강 소재</span>
+                            <span class="font-bold text-[#092C5E]">Fiberglass, Carbon Fiber</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">기본 소재</span>
+                            <span class="font-bold text-[#092C5E]">Onyx (탄소섬유 나일론)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 가격 정책 -->
+                <div class="bg-gradient-to-br from-[#092C5E] to-[#4980C1] rounded-xl shadow-lg p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-6">합리적인 가격</h3>
+                    <p class="mb-6 opacity-90">
+                        기존 3D 프린트기 수준의 저렴한 가격으로<br>
+                        CNC에 준하는 높은 강도와 성능을 제공합니다
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <h4 class="font-bold mb-2">📊 가격 책정 기준</h4>
+                            <p class="text-sm opacity-90">재료비(g) + 출력시간 기반 투명한 가격</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <h4 class="font-bold mb-2">🎯 소재 선택</h4>
+                            <p class="text-sm opacity-90">Onyx, 유리섬유, 탄소섬유 중 선택</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <h4 class="font-bold mb-2">💡 추가 서비스</h4>
+                            <p class="text-sm opacity-90">모델링 서비스 제공, STL 파일 즉시 출력</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA 섹션 -->
+            <div class="mt-16 bg-white rounded-2xl shadow-xl p-12 text-center">
+                <h3 class="text-3xl font-bold mb-4 text-[#092C5E]">
+                    지금 바로 시작하세요
+                </h3>
+                <p class="text-xl text-gray-600 mb-8">
+                    무료 견적과 기술 상담을 받아보세요
+                </p>
+                <div class="flex gap-4 justify-center">
+                    <button class="bg-[#F28347] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#D94925] transition"
+                            hx-get="/api/quote-form"
+                            hx-target="#modal-container"
+                            hx-swap="innerHTML">
+                        무료 견적 요청
+                    </button>
+                    <button class="border-2 border-[#092C5E] text-[#092C5E] px-8 py-4 rounded-lg text-lg hover:bg-[#092C5E] hover:text-white transition"
+                            hx-get="/api/consultation-form"
+                            hx-target="#modal-container"
+                            hx-swap="innerHTML">
+                        기술 상담 신청
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-8 py-4 rounded-lg text-lg hover:bg-gray-200 transition"
+                            hx-get="/api/sample-form"
+                            hx-target="#modal-container"
+                            hx-swap="innerHTML">
+                        샘플 요청
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="bg-[#092C5E] text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-2xl font-bold mb-4">ICARUS 3D</h4>
+                    <p class="text-gray-300">
+                        초고강도 3D 프린팅의 새로운 기준
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">서비스</h5>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition">3D 프린팅</a></li>
+                        <li><a href="#" class="hover:text-white transition">모델링</a></li>
+                        <li><a href="#" class="hover:text-white transition">기술 상담</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">자료</h5>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition">기술 문서</a></li>
+                        <li><a href="#" class="hover:text-white transition">소재 가이드</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">연락처</h5>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>📧 info@icarus3d.com</li>
+                        <li>📞 02-1234-5678</li>
+                        <li>📍 서울시 강남구</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-600 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 ICARUS 3D. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- 모달 컨테이너 -->
+    <div id="modal-container"></div>
+</body>
+</html>
