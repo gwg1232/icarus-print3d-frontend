@@ -10,5 +10,5 @@ pub fn about() -> Markup {
         }
     };
 
-    base_layout("About", content)
+    base_layout("About", "About", content)
 }

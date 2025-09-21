@@ -1,12 +1,37 @@
 [package]
-name = "htmx-tailwind-axum-sqlx-postgres"
+name = "maud_tailwind_htmx_axum_sqlx_postgres"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-# Backend
+# Web Framework
 axum = { version = "0.8.4", features = ["macros"] }
+tower = "0.5.2"
+tower-http = { version = "0.6.6", features = ["fs", "trace"] }
+
+# Template Engine
+maud = { version = "0.27.0", features = ["axum"] }
+
+# Async Runtime
 tokio = { version = "1.47.1", features = ["full"] }
 
-# Frontend
-maud = { version = "0.27.0", features = ["axum"] }
+# Database
+sqlx = { version = "0.8.6", features = [
+    "postgres",
+    "runtime-tokio",
+    "macros",
+    "chrono",
+] }
+
+# Serialization
+serde = { version = "1.0.226", features = ["derive"] }
+
+# Validation
+validator = { version = "0.20.0", features = ["derive"] }
+
+# Date/Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Logging
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }

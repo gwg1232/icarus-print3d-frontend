@@ -1,25 +1,18 @@
-mod views;
-
-use axum::{Router, routing::get};
-use maud::Markup;
+use maud_tailwind_htmx_axum_sqlx_postgres::{init, routes};
 
 #[tokio::main]
 async fn main() {
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:8000")
-        .await
-        .unwrap();
+    let addr = "127.0.0.1:8000";
 
-    let app = Router::new()
-        .route("/", get(home))
-        .route("/about", get(about));
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+
+    init::logging();
+
+    tracing::info!("Server is starting...");
+
+    tracing::info!("Listening at {}", addr);
+
+    let app = routes::create_routes();
 
     axum::serve(listener, app).await.unwrap();
-}
-
-async fn home() -> Markup {
-    views::pages::home::home()
-}
-
-async fn about() -> Markup {
-    views::pages::about::about()
 }

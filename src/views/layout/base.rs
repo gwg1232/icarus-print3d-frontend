@@ -1,14 +1,18 @@
-use maud::{DOCTYPE, Markup, html};
-use super::{navigation, footer};
+use super::navigation;
+use maud::{html, Markup, DOCTYPE};
 
-pub fn base_layout(title: &str, content: Markup) -> Markup {
+pub fn base_layout(title: &str, meta_description: &str, content: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {
             head {
                 meta charset="UTF-8";
                 meta name="viewport" content="width=device-width, initial-scale=1.0";
-                title { (title) }
+                title { (title) " - MyTodoSite" }
+                meta name="description" content=(meta_description);
+
+                // Favicon
+                link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg";
 
                 // Tailwind CSS CDN
                 script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" {}
@@ -17,15 +21,12 @@ pub fn base_layout(title: &str, content: Markup) -> Markup {
                 script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
                     integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
                     crossorigin="anonymous" {}
-
-                // Custom styles or scripts can be added here
             }
             body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col" {
                 (navigation::navbar())
-                main class="flex-grow" {
+                main class="flex-grow container mx-auto px-4 py-8" {
                     (content)
                 }
-                (footer::footer())
             }
         }
     }

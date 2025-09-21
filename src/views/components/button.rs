@@ -1,5 +1,7 @@
 use maud::{Markup, html};
 
+// TODO: Remove dead_code allowance when this is used.
+#[allow(dead_code)]
 pub fn button(text: &str, hx_get: &str, target: &str) -> Markup {
     html! {
         button

@@ -1,1 +1,1 @@
-# axum-hello
+# maud_tailwind_htmx_axum_sqlx_postgres

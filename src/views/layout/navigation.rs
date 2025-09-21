@@ -2,16 +2,15 @@ use maud::{html, Markup};
 
 pub fn navbar() -> Markup {
     html! {
-        nav class="bg-white shadow-sm" {
-            div class="container mx-auto px-4" {
+        header class="bg-white shadow-sm" {
+            nav class="container mx-auto px-4" {
                 div class="flex justify-between h-16 items-center" {
-                    a href="/" class="text-xl font-bold" {
-                        "App"
-                    }
-
-                    div class="flex gap-4" {
-                        a href="/" class="hover:text-blue-600" { "Home" }
-                        a href="/about" class="hover:text-blue-600" { "About" }
+                    div class="flex gap-6" {
+                        a href="/" class="hover:text-blue-600 transition-colors" { "Home" }
+                        a href="/create" class="hover:text-blue-600 transition-colors" { "Create" }
+                        a href="/todos" class="hover:text-blue-600 transition-colors" { "Todos" }
+                        a href="/sign_up" class="hover:text-blue-600 transition-colors" { "Sign Up" }
+                        a href="/sign_in" class="hover:text-blue-600 transition-colors" { "Sign In" }
                     }
                 }
             }
