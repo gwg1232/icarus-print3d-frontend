@@ -1,6 +1,6 @@
 use axum::{
     http::StatusCode,
-    response::{IntoResponse, Response},
+    response::{IntoResponse, Redirect, Response},
 };
 
 pub async fn post_forms_sign_up() -> Response {
@@ -8,7 +8,7 @@ pub async fn post_forms_sign_up() -> Response {
 }
 
 pub async fn post_forms_sign_in() -> Response {
-    StatusCode::NOT_IMPLEMENTED.into_response()
+    Redirect::to("/").into_response()
 }
 
 pub async fn post_forms_sign_out() -> Response {

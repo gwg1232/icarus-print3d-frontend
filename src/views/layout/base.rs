@@ -1,4 +1,5 @@
 use super::navigation;
+use crate::paths;
 use maud::{html, Markup, DOCTYPE};
 
 pub fn base_layout(title: &str, meta_description: &str, content: Markup) -> Markup {
@@ -12,7 +13,7 @@ pub fn base_layout(title: &str, meta_description: &str, content: Markup) -> Mark
                 meta name="description" content=(meta_description);
 
                 // Favicon
-                link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg";
+                link rel="icon" type="image/svg+xml" href=(paths::static_files::FAVICON);
 
                 // Tailwind CSS CDN
                 script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" {}

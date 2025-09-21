@@ -2,7 +2,7 @@ use crate::views;
 use maud::Markup;
 
 pub async fn get_root() -> Markup {
-    views::pages::home::home()
+    views::pages::root::root()
 }
 
 pub async fn get_about() -> Markup {

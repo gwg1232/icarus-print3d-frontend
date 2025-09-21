@@ -1,4 +1,4 @@
-pub mod home;
+pub mod root;
 pub mod about;
 pub mod create;
 pub mod todos;

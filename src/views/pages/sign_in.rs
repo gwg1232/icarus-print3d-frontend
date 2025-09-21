@@ -1,4 +1,5 @@
 use crate::views::layout::base::base_layout;
+use crate::paths;
 use maud::{Markup, html};
 
 pub fn sign_in() -> Markup {
@@ -6,7 +7,7 @@ pub fn sign_in() -> Markup {
         div class="max-w-sm mx-auto" {
             h1 class="text-2xl font-bold mb-6 text-center" { "Sign In" }
 
-            form method="POST" action="/sign_in" class="space-y-4" {
+            form method="POST" action=(paths::forms::SIGN_IN) class="space-y-4" {
                 input type="email" name="email" required
                     class="w-full px-3 py-2 border rounded"
                     placeholder="Email";
