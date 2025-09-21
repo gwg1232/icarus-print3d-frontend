@@ -1,13 +1,11 @@
 # Rules
 
-- Adopt a single standard and avoid exceptions or options to keep the codebase compact and maintainable.
-- URLs: use snake_case with underscores
-- Handler names follow the pattern: method_endpoint_suffix
-  - Suffix examples:
-    - _page → returns HTML/template
-    - _form → handles form submissions
+- Use a single standard and avoid exceptions or optional configurations to keep the codebase compact and maintainable
+- Use `snake_case` for URLs (underscores)
+- HTTP API handler names must follow the pattern: `method_endpoint`
+  - endpoint: derived from the route path—static segments as-is; path params as {resource}_id; join with underscores
 
 ## Reminders
 
-- Improve naming across files, functions, variables, and other identifiers
-- Update symbol visibility (functions, types, etc.) to conform to a least-exposure public interface
+- Improve names for files, functions, variables, and other identifiers
+- Minimize symbol visibility: make functions, types, and other items private unless they need to be public

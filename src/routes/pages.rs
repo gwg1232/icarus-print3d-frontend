@@ -1,9 +1,11 @@
-use crate::handlers;
-use axum::{routing::get, Router};
+use crate::handlers::pages;
+use axum::{Router, routing::get};
 
 pub fn routes() -> Router {
     Router::new()
-        .route("/", get(handlers::pages::home))
-        .route("/about", get(handlers::pages::about))
-        .route("/create", get(handlers::pages::create))
+        .route("/", get(pages::get_root))
+        .route("/about", get(pages::get_about))
+        .route("/create", get(pages::get_create))
+        .route("/sign_up", get(pages::get_sign_up))
+        .route("/sign_in", get(pages::get_sign_in))
 }
