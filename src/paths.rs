@@ -30,6 +30,5 @@ pub mod forms {
 pub mod static_files {
     define_nested_routes!("/static", {
         FAVICON => "/img/favicon.svg",
-        CSS => "/css/",
     });
 }

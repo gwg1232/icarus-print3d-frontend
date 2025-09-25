@@ -1,11 +1,14 @@
-# Rules
+# Guidelines for Claude Code
 
-- Use a single standard and avoid exceptions or optional configurations to keep the codebase compact and maintainable
-- Use `snake_case` for URLs (underscores)
-- HTTP API handler names must follow the pattern: `method_endpoint`
-  - endpoint: derived from the route path—static segments as-is; path params as {resource}_id; join with underscores
+## Code Style
 
-## Reminders
+- Follow modern Rust conventions
+- Maintain a single standard to keep the codebase compact and maintainable
+- Minimize symbol visibility: prefer private unless public is required
 
-- Improve names for files, functions, variables, and other identifiers
-- Minimize symbol visibility: make functions, types, and other items private unless they need to be public
+## Naming
+
+- Improve naming for files, functions, variables, and identifiers
+- Use `snake_case` for URLs (with underscores)
+- HTTP handler names follow the pattern: `method_endpoint`
+  - Endpoint derived from route path: static segments as-is, path params as `{resource}_id`, joined with underscores
