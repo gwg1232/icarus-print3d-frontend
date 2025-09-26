@@ -2,8 +2,8 @@ use std::time::Duration;
 
 use axum::{body::Body, extract::Request, http::Response};
 use tower::{
-    layer::util::{Identity, Stack},
     ServiceBuilder,
+    layer::util::{Identity, Stack},
 };
 use tower_http::{
     classify::{ServerErrorsAsFailures, ServerErrorsFailureClass, SharedClassifier},
@@ -38,7 +38,7 @@ pub(super) fn create_http_trace_layer() -> HttpTraceLayer {
 
 fn on_request(request: &Request<Body>, _: &Span) {
     tracing::info!(
-        "Request started: method {} path {}",
+        "-> Request started: method {} path {}",
         request.method(),
         request.uri().path()
     );
@@ -46,14 +46,14 @@ fn on_request(request: &Request<Body>, _: &Span) {
 
 fn on_response(response: &Response<Body>, latency: Duration, _: &Span) {
     tracing::info!(
-        "Response generated: status {} in {:?}",
+        "<- Response generated: status {} in {:?}",
         response.status(),
         latency
     );
 }
 
 fn on_failure(error: ServerErrorsFailureClass, latency: Duration, _: &Span) {
-    tracing::error!("Request failed: {:?} after {:?}", error, latency);
+    tracing::error!("-x- Request failed: {:?} after {:?}", error, latency);
 }
 
 fn make_span(_: &Request<Body>) -> Span {
