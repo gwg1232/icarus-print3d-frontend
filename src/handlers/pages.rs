@@ -1,22 +1,22 @@
-use crate::views;
+use crate::views::pages;
 use maud::Markup;
 
 pub async fn get_root() -> Markup {
-    views::pages::root::root()
+    pages::root::root()
 }
 
 pub async fn get_about() -> Markup {
-    views::pages::about::about()
+    pages::about::about()
 }
 
 pub async fn get_create() -> Markup {
-    views::pages::create::create()
+    pages::create::create()
 }
 
 pub async fn get_sign_up() -> Markup {
-    views::pages::sign_up::sign_up()
+    pages::sign_up::sign_up()
 }
 
 pub async fn get_sign_in() -> Markup {
-    views::pages::sign_in::sign_in()
+    pages::sign_in::sign_in(None, None)
 }

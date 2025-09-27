@@ -5,7 +5,10 @@ use axum::{
 };
 use validator::Validate;
 
-use crate::models::dtos::user::{SignInForm, SignUpForm};
+use crate::models::dtos::user::{SignInForm, SignUpForm, FIELD_EMAIL, FIELD_PASSWORD};
+use crate::views::pages::sign_in;
+
+use super::helpers;
 
 pub async fn post_forms_sign_up(Form(sign_up_form): Form<SignUpForm>) -> Response {
     tracing::info!(
@@ -20,9 +23,13 @@ pub async fn post_forms_sign_in(Form(sign_in_form): Form<SignInForm>) -> Respons
     match sign_in_form.validate() {
         Ok(_) => Redirect::to("/").into_response(),
         Err(errs) => {
-            let errs = errs.to_string();
-            tracing::error!("Validation error: {:?}", errs);
-            Redirect::to("/").into_response()
+            let errors = helpers::parse_errors(&errs.to_string());
+
+            sign_in::sign_in(
+                errors.get(FIELD_EMAIL).map(|s| s.as_str()),
+                errors.get(FIELD_PASSWORD).map(|s| s.as_str()),
+            )
+            .into_response()
         }
     }
 }
