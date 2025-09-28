@@ -14,7 +14,7 @@ pub async fn get_create() -> Markup {
 }
 
 pub async fn get_sign_up() -> Markup {
-    pages::sign_up::sign_up()
+    pages::sign_up::sign_up(None, None)
 }
 
 pub async fn get_sign_in() -> Markup {
