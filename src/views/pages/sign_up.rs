@@ -1,4 +1,4 @@
-use crate::models::dtos::user::{FIELD_EMAIL, FIELD_PASSWORD};
+use crate::handlers::dtos::user::{FIELD_EMAIL, FIELD_PASSWORD};
 use crate::paths;
 use crate::views::layout::base::base_layout;
 use maud::{html, Markup};

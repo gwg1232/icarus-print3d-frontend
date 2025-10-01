@@ -1,8 +1,7 @@
-use crate::handlers::pages;
-use crate::paths;
+use crate::{config::AppState, handlers::pages, paths};
 use axum::{Router, routing::get};
 
-pub fn routes() -> Router {
+pub fn routes() -> Router<AppState> {
     Router::new()
         .route(paths::pages::ROOT, get(pages::get_root))
         .route(paths::pages::ABOUT, get(pages::get_about))

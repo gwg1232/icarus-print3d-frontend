@@ -1,18 +1,24 @@
-use maud_tailwind_htmx_axum_sqlx_postgres::{init, routes};
+use maud_tailwind_htmx_axum_sqlx_postgres::{
+    config::{AppConfig, AppState},
+    init, routes,
+};
 
 #[tokio::main]
 async fn main() {
-    let addr = "127.0.0.1:8000";
+    init::init_logging();
 
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
-
-    init::logging();
+    let config = AppConfig::from_env();
+    let db = init::init_database(&config.database_url).await;
+    let state = AppState { db };
 
     tracing::info!("Server is starting...");
+    tracing::info!("Listening at {}", config.server_addr);
 
-    tracing::info!("Listening at {}", addr);
+    let listener = tokio::net::TcpListener::bind(&config.server_addr)
+        .await
+        .unwrap();
 
-    let app = routes::create_routes();
+    let app = routes::create_routes(state);
 
     axum::serve(listener, app).await.unwrap();
 }
