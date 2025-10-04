@@ -1,5 +1,6 @@
 mod http_tracing;
 
+pub mod actions;
 pub mod forms;
 pub mod pages;
 
@@ -21,7 +22,8 @@ pub fn create_routes(
     let app_routes = Router::new()
         .merge(pages::public_routes())
         .merge(protected_routes)
-        .nest(paths::forms::BASE, forms::routes())
+        .nest(paths::forms::BASE, forms::form_routes())
+        .nest(paths::actions::BASE, actions::action_routes())
         .with_state(state)
         .layer(middleware::from_fn(middlewares::authenticate))
         .layer(session_layer);

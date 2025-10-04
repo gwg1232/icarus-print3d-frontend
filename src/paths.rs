@@ -52,6 +52,11 @@ pub mod forms {
     define_nested_routes!("/forms", {
         SIGN_UP => "/sign_up",
         SIGN_IN => "/sign_in",
+    });
+}
+
+pub mod actions {
+    define_nested_routes!("/actions", {
         SIGN_OUT => "/sign_out",
     });
 }
