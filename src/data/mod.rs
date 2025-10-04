@@ -1,3 +1,3 @@
-pub mod commands;
-pub mod errors;
-pub mod queries;
+pub(crate) mod commands;
+pub(crate) mod errors;
+pub(crate) mod queries;

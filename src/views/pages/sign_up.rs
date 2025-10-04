@@ -6,7 +6,7 @@ use crate::{
 };
 use maud::{html, Markup};
 
-pub fn sign_up(
+pub(crate) fn sign_up(
     current_user: &CurrentUser,
     email_value: Option<&str>,
     email_error: Option<&str>,

@@ -32,3 +32,11 @@ This is a **template repository** for web applications. Keep all views and UI mi
 - Use `snake_case` for URLs (with underscores)
 - HTTP handler names follow the pattern: `method_endpoint`
   - Endpoint derived from route path: static segments as-is, path params as `{resource}_id`, joined with underscores
+  - Examples:
+    - `/forms/sign_in` → `post_forms_sign_in`
+    - `/actions/sign_out` → `post_actions_sign_out`
+    - `/todos` → `get_todos`
+- Module structure mirrors route structure
+  - Form handlers in `handlers/forms/` for `/forms/*` routes
+  - Action handlers in `handlers/actions/` for `/actions/*` routes
+  - Page handlers in `handlers/pages/` for page routes

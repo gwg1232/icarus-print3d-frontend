@@ -1,5 +1,6 @@
+pub(crate) mod actions;
 pub mod dtos;
 mod errors;
-pub mod fallback;
-pub mod forms;
-pub mod pages;
+pub(crate) mod fallback;
+pub(crate) mod forms;
+pub(crate) mod pages;

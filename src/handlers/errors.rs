@@ -7,7 +7,7 @@ use thiserror::Error;
 use crate::{auth::CurrentUser, data::errors::DataError, views::pages::server_error};
 
 #[derive(Error, Debug)]
-pub enum HandlerError {
+pub(crate) enum HandlerError {
     #[error("{0}")]
     Data(#[from] DataError),
 

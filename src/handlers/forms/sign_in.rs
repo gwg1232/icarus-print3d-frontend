@@ -19,7 +19,7 @@ use crate::{
 
 use super::parse_validation_errors;
 
-pub async fn post_forms_sign_in(
+pub(crate) async fn post_forms_sign_in(
     State(db): State<PgPool>,
     Extension(current_user): Extension<CurrentUser>,
     session: Session,

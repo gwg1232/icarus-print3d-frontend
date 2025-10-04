@@ -3,7 +3,7 @@ use argon2::password_hash::{PasswordHasher, SaltString, rand_core::OsRng};
 use argon2::Argon2;
 use sqlx::PgPool;
 
-pub async fn create_user(db: &PgPool, email: &str, password: &str) -> Result<(), DataError> {
+pub(crate) async fn create_user(db: &PgPool, email: &str, password: &str) -> Result<(), DataError> {
     let salt = SaltString::generate(&mut OsRng);
     let argon2 = Argon2::default();
     let password_hash = argon2

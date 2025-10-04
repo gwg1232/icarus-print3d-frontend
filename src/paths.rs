@@ -31,6 +31,7 @@ macro_rules! define_nested_routes {
     ($base:expr, { $($name:ident => $path:expr),* $(,)? }) => {
         pub const BASE: &str = $base;
 
+        #[allow(dead_code)]
         pub mod relative {
             $(pub const $name: &str = $path;)*
         }

@@ -1,7 +1,7 @@
-use crate::{config::AppState, handlers::forms, paths::actions::relative};
+use crate::{config::AppState, handlers::actions, paths::actions::relative};
 use axum::{Router, routing::post};
 
-pub fn action_routes() -> Router<AppState> {
+pub(crate) fn action_routes() -> Router<AppState> {
     Router::new()
-        .route(relative::SIGN_OUT, post(forms::post_forms_sign_out))
+        .route(relative::SIGN_OUT, post(actions::post_actions_sign_out))
 }

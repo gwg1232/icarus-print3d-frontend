@@ -1,10 +1,8 @@
 mod sign_in;
-mod sign_out;
 mod sign_up;
 
-pub use sign_in::post_forms_sign_in;
-pub use sign_out::post_forms_sign_out;
-pub use sign_up::post_forms_sign_up;
+pub(crate) use sign_in::post_forms_sign_in;
+pub(crate) use sign_up::post_forms_sign_up;
 
 use std::collections::HashMap;
 

@@ -1,8 +1,8 @@
 mod http_tracing;
 
-pub mod actions;
-pub mod forms;
-pub mod pages;
+mod actions;
+mod forms;
+mod pages;
 
 use axum::{Router, middleware};
 use tower_http::services::ServeDir;

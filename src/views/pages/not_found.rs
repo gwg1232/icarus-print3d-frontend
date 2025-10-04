@@ -1,7 +1,7 @@
 use crate::{auth::CurrentUser, views::layout::base::base_layout};
 use maud::{Markup, html};
 
-pub fn not_found(current_user: &CurrentUser) -> Markup {
+pub(crate) fn not_found(current_user: &CurrentUser) -> Markup {
     let content = html! {
         h1 class="text-6xl font-bold text-gray-900" { "404" }
     };
