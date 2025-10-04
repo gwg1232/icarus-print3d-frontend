@@ -25,3 +25,4 @@ pub async fn get_sign_in(Extension(current_user): Extension<CurrentUser>) -> Mar
 pub async fn get_todos(Extension(current_user): Extension<CurrentUser>) -> Markup {
     pages::todos::todos(&current_user)
 }
+
