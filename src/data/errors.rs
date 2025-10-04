@@ -2,18 +2,18 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum DataError {
-    #[error("Database query failed: {0}")]
-    Query(#[from] sqlx::Error),
+    #[error("Database error")]
+    Database(#[from] sqlx::Error),
 
-    #[error("Query failed: {0}")]
-    FailedQuery(String),
+    #[error("{0}")]
+    NotFound(&'static str),
 
-    #[error("This email address is already used")]
-    DuplicateEmail,
+    #[error("{0}")]
+    Unauthorized(&'static str),
 
-    #[error("Internal error: {0}")]
-    Internal(String),
+    #[error("{0}")]
+    Conflict(&'static str),
 
-    #[error("Password hashing failed")]
-    Hash,
+    #[error("{0}")]
+    Internal(&'static str),
 }

@@ -14,10 +14,15 @@ pub enum HandlerError {
 
 impl IntoResponse for HandlerError {
     fn into_response(self) -> Response {
-        let (status, message) = match &self {
-            Self::Data(_) => (StatusCode::INTERNAL_SERVER_ERROR, self.to_string()),
+        let (status, message) = match self {
+            Self::Data(DataError::NotFound(msg)) => (StatusCode::NOT_FOUND, msg),
+            Self::Data(DataError::Unauthorized(msg)) => (StatusCode::UNAUTHORIZED, msg),
+            Self::Data(DataError::Conflict(msg)) => (StatusCode::CONFLICT, msg),
+            Self::Data(DataError::Database(_)) | Self::Data(DataError::Internal(_)) => {
+                (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error")
+            }
         };
 
-        (status, server_error::server_error(&message)).into_response()
+        (status, server_error::server_error(message)).into_response()
     }
 }

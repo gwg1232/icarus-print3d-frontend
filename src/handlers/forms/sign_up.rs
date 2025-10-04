@@ -24,13 +24,10 @@ pub async fn post_forms_sign_up(
             tracing::info!("Sign up successful for email: {}", form.email);
             Ok(Redirect::to(pages::SIGN_IN).into_response())
         }
-        Err(err) => {
-            if is_duplicate_email_error(&err) {
-                Ok(render_database_error(&err))
-            } else {
-                Err(err.into())
-            }
+        Err(crate::data::errors::DataError::Conflict(msg)) => {
+            Ok(render_conflict_error(msg))
         }
+        Err(err) => Err(err.into()),
     }
 }
 
@@ -46,14 +43,10 @@ fn render_validation_errors(validation_errors: &validator::ValidationErrors) -> 
         .into_response()
 }
 
-fn is_duplicate_email_error(err: &crate::data::errors::DataError) -> bool {
-    matches!(err, crate::data::errors::DataError::DuplicateEmail)
-}
-
-fn render_database_error(err: &crate::data::errors::DataError) -> Response {
+fn render_conflict_error(message: &str) -> Response {
     (
-        StatusCode::BAD_REQUEST,
-        sign_up::sign_up(Some(&err.to_string()), None),
+        StatusCode::CONFLICT,
+        sign_up::sign_up(Some(message), None),
     )
         .into_response()
 }
