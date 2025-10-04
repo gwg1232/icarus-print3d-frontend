@@ -21,3 +21,7 @@ pub async fn get_sign_up(Extension(current_user): Extension<CurrentUser>) -> Mar
 pub async fn get_sign_in(Extension(current_user): Extension<CurrentUser>) -> Markup {
     pages::sign_in::sign_in(&current_user, None, None, None)
 }
+
+pub async fn get_todos(Extension(current_user): Extension<CurrentUser>) -> Markup {
+    pages::todos::todos(&current_user)
+}

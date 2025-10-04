@@ -1,12 +1,12 @@
 use axum::{
     extract::Request,
-    http::StatusCode,
+    http::{StatusCode, header},
     middleware::Next,
-    response::{IntoResponse, Response},
+    response::{IntoResponse, Redirect, Response},
 };
 use tower_sessions::Session;
 
-use crate::auth::{CurrentUser, SESSION_USER_ID_KEY};
+use crate::{auth::{CurrentUser, SESSION_USER_ID_KEY}, paths};
 
 pub async fn authenticate(session: Session, mut req: Request, next: Next) -> Response {
     let current_user = match session.get::<i32>(SESSION_USER_ID_KEY).await {
@@ -17,4 +17,18 @@ pub async fn authenticate(session: Session, mut req: Request, next: Next) -> Res
 
     req.extensions_mut().insert(current_user);
     next.run(req).await
+}
+
+pub async fn require_authentication(req: Request, next: Next) -> Response {
+    match req.extensions().get::<CurrentUser>() {
+        Some(CurrentUser::Authenticated { .. }) => {
+            let mut res = next.run(req).await;
+            res.headers_mut().insert(
+                header::CACHE_CONTROL,
+                "no-store, no-cache, must-revalidate, private".parse().unwrap(),
+            );
+            res
+        }
+        _ => Redirect::to(paths::pages::SIGN_IN).into_response(),
+    }
 }
