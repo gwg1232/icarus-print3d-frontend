@@ -3,7 +3,7 @@
 ## Code Style
 
 - Follow modern Rust conventions
-- Maintain a single standard to keep the codebase compact and maintainable
+- **Single standard principle**: Maintain exactly one way to accomplish each task - avoid creating multiple functions or patterns for the same purpose
 - Minimize symbol visibility: prefer private unless public is required
 
 ## Naming

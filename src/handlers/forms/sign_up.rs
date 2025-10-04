@@ -16,7 +16,7 @@ pub async fn post_forms_sign_up(
     Form(form): Form<SignUpForm>,
 ) -> Result<Response, crate::handlers::errors::HandlerError> {
     if let Err(validation_errors) = form.validate() {
-        return Ok(render_validation_errors(&validation_errors));
+        return Ok(render_validation_errors(&form, &validation_errors));
     }
 
     match commands::user::create_user(&db, &form.email, &form.password).await {
@@ -25,17 +25,21 @@ pub async fn post_forms_sign_up(
             Ok(Redirect::to(pages::SIGN_IN).into_response())
         }
         Err(crate::data::errors::DataError::Conflict(msg)) => {
-            Ok(render_conflict_error(msg))
+            Ok(render_conflict_error(&form, msg))
         }
         Err(err) => Err(err.into()),
     }
 }
 
-fn render_validation_errors(validation_errors: &validator::ValidationErrors) -> Response {
+fn render_validation_errors(
+    form: &SignUpForm,
+    validation_errors: &validator::ValidationErrors,
+) -> Response {
     let errors = parse_validation_errors(validation_errors);
     (
         StatusCode::BAD_REQUEST,
         sign_up::sign_up(
+            Some(&form.email),
             errors.get(FIELD_EMAIL).map(String::as_str),
             errors.get(FIELD_PASSWORD).map(String::as_str),
         ),
@@ -43,10 +47,10 @@ fn render_validation_errors(validation_errors: &validator::ValidationErrors) -> 
         .into_response()
 }
 
-fn render_conflict_error(message: &str) -> Response {
+fn render_conflict_error(form: &SignUpForm, message: &str) -> Response {
     (
         StatusCode::CONFLICT,
-        sign_up::sign_up(Some(message), None),
+        sign_up::sign_up(Some(&form.email), Some(message), None),
     )
         .into_response()
 }

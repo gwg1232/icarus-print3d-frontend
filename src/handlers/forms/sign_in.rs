@@ -12,17 +12,18 @@ pub async fn post_forms_sign_in(
     Form(form): Form<SignInForm>,
 ) -> Result<Response, crate::handlers::errors::HandlerError> {
     if let Err(validation_errors) = form.validate() {
-        return Ok(render_errors(&validation_errors));
+        return Ok(render_errors(&form, &validation_errors));
     }
 
     Ok(Redirect::to("/").into_response())
 }
 
-fn render_errors(validation_errors: &validator::ValidationErrors) -> Response {
+fn render_errors(form: &SignInForm, validation_errors: &validator::ValidationErrors) -> Response {
     let errors = parse_validation_errors(validation_errors);
     (
         StatusCode::BAD_REQUEST,
         sign_in::sign_in(
+            Some(&form.email),
             errors.get(FIELD_EMAIL).map(String::as_str),
             errors.get(FIELD_PASSWORD).map(String::as_str),
         ),

@@ -3,14 +3,18 @@ use crate::paths;
 use crate::views::layout::base::base_layout;
 use maud::{Markup, html};
 
-pub fn sign_in(email_error: Option<&str>, password_error: Option<&str>) -> Markup {
+pub fn sign_in(
+    email_value: Option<&str>,
+    email_error: Option<&str>,
+    password_error: Option<&str>,
+) -> Markup {
     let content = html! {
         div class="max-w-sm mx-auto" {
             h1 class="text-2xl font-bold mb-6 text-center" { "Sign In" }
 
             form method="POST" action=(paths::forms::SIGN_IN) class="space-y-4" {
-                (render_input("email", FIELD_EMAIL, "Email", email_error))
-                (render_input("password", FIELD_PASSWORD, "Password", password_error))
+                (render_input("email", FIELD_EMAIL, "Email", email_value, email_error))
+                (render_input("password", FIELD_PASSWORD, "Password", None, password_error))
 
                 button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700" {
                     "Sign In"
@@ -27,6 +31,7 @@ fn render_input(
     input_type: &str,
     name: &str,
     placeholder: &str,
+    value: Option<&str>,
     error: Option<&str>,
 ) -> Markup {
     let input_class = if error.is_some() {
@@ -39,7 +44,8 @@ fn render_input(
         div {
             input type=(input_type) name=(name) required
                 class=(input_class)
-                placeholder=(placeholder);
+                placeholder=(placeholder)
+                value=[value];
 
             @if let Some(error_msg) = error {
                 p class="mt-1 text-sm text-red-600" { (error_msg) }
