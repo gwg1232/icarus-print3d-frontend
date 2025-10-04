@@ -1,7 +1,7 @@
-use crate::views::layout::base::base_layout;
+use crate::{auth::CurrentUser, views::layout::base::base_layout};
 use maud::{Markup, html};
 
-pub fn server_error(message: &str) -> Markup {
+pub fn server_error(current_user: &CurrentUser, message: &str) -> Markup {
     let content = html! {
         h1 class="text-3xl font-bold mb-4" {
             "Internal server error"
@@ -11,5 +11,5 @@ pub fn server_error(message: &str) -> Markup {
         }
     };
 
-    base_layout("Server error", "Server error", content)
+    base_layout(current_user, "Server error", "Server error", content)
 }

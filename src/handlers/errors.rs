@@ -4,12 +4,15 @@ use axum::{
 };
 use thiserror::Error;
 
-use crate::{data::errors::DataError, views::pages::server_error};
+use crate::{auth::CurrentUser, data::errors::DataError, views::pages::server_error};
 
 #[derive(Error, Debug)]
 pub enum HandlerError {
     #[error("{0}")]
     Data(#[from] DataError),
+
+    #[error("{0}")]
+    Session(#[from] tower_sessions::session::Error),
 }
 
 impl IntoResponse for HandlerError {
@@ -18,11 +21,11 @@ impl IntoResponse for HandlerError {
             Self::Data(DataError::NotFound(msg)) => (StatusCode::NOT_FOUND, msg),
             Self::Data(DataError::Unauthorized(msg)) => (StatusCode::UNAUTHORIZED, msg),
             Self::Data(DataError::Conflict(msg)) => (StatusCode::CONFLICT, msg),
-            Self::Data(DataError::Database(_)) | Self::Data(DataError::Internal(_)) => {
-                (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error")
-            }
+            Self::Data(DataError::Database(_))
+            | Self::Data(DataError::Internal(_))
+            | Self::Session(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error"),
         };
 
-        (status, server_error::server_error(message)).into_response()
+        (status, server_error::server_error(&CurrentUser::Guest, message)).into_response()
     }
 }

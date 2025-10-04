@@ -9,6 +9,7 @@ async fn main() {
 
     let config = AppConfig::from_env();
     let db = init::init_database(&config.database_url).await;
+    let session_layer = init::init_session(db.clone()).await;
     let state = AppState { db };
 
     tracing::info!("Server is starting...");
@@ -18,7 +19,7 @@ async fn main() {
         .await
         .unwrap();
 
-    let app = routes::create_routes(state);
+    let app = routes::create_routes(state, session_layer);
 
     axum::serve(listener, app).await.unwrap();
 }

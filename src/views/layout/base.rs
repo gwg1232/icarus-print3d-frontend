@@ -1,8 +1,8 @@
 use super::navigation;
-use crate::paths;
+use crate::{auth::CurrentUser, paths};
 use maud::{html, Markup, DOCTYPE};
 
-pub fn base_layout(title: &str, meta_description: &str, content: Markup) -> Markup {
+pub fn base_layout(current_user: &CurrentUser, title: &str, meta_description: &str, content: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {
@@ -24,7 +24,7 @@ pub fn base_layout(title: &str, meta_description: &str, content: Markup) -> Mark
                     crossorigin="anonymous" {}
             }
             body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col" {
-                (navigation::navbar())
+                (navigation::navbar(current_user))
                 main class="flex-grow container mx-auto px-4 py-8" {
                     (content)
                 }

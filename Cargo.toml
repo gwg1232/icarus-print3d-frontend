@@ -4,15 +4,31 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-# Web Framework
+# ============================================================================
+# Core
+# ============================================================================
+## Async Runtime
+tokio = { version = "1.47.1", features = ["full"] }
+
+# ============================================================================
+# Web
+# ============================================================================
+## Framework
 axum = { version = "0.8.6", features = ["macros"] }
 tower = "0.5.2"
 tower-http = { version = "0.6.6", features = ["fs", "trace"] }
 
-# Async Runtime
-tokio = { version = "1.47.1", features = ["full"] }
+## Sessions
+tower-sessions = "0.14.0"
+tower-sessions-sqlx-store = { version = "0.15.0", features = ["postgres"] }
 
-# Database
+## Template Engine
+maud = { version = "0.27.0", features = ["axum"] }
+
+# ============================================================================
+# Data
+# ============================================================================
+## Database
 sqlx = { version = "0.8.6", features = [
     "macros",
     "postgres",
@@ -20,34 +36,34 @@ sqlx = { version = "0.8.6", features = [
     "tls-rustls",
 ] }
 
-# Template Engine
-maud = { version = "0.27.0", features = ["axum"] }
-
-# Security
-argon2 = "0.5.3"
-
-# Error Handling
-thiserror = "2.0.17"
-
-# Validation
-validator = { version = "0.20.0", features = ["derive"] }
-
-# Serialization
+## Serialization
 serde = { version = "1.0.228", features = ["derive"] }
 
-# Date/Time
+## Date/Time
 chrono = { version = "0.4", features = ["serde"] }
+time = "0.3.44"
 
-# Logging
+# ============================================================================
+# Security & Validation
+# ============================================================================
+## Security
+argon2 = "0.5.3"
+
+## Validation
+validator = { version = "0.20.0", features = ["derive"] }
+
+# ============================================================================
+# Infrastructure
+# ============================================================================
+## Error Handling
+thiserror = "2.0.17"
+
+## Logging
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
 
-# Configuration
+## Configuration
 dotenvy = "0.15.7"
 
-# Sessions
-tower-sessions = "0.14.0"
-tower-sessions-sqlx-store = { version = "0.15.0", features = ["postgres"] }
-
-# Utilities
+## Utilities
 regex = "1.11.3"

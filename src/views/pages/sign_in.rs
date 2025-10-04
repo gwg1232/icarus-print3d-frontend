@@ -1,9 +1,8 @@
-use crate::handlers::dtos::user::{FIELD_EMAIL, FIELD_PASSWORD};
-use crate::paths;
-use crate::views::layout::base::base_layout;
+use crate::{auth::CurrentUser, handlers::dtos::user::{FIELD_EMAIL, FIELD_PASSWORD}, paths, views::layout::base::base_layout};
 use maud::{Markup, html};
 
 pub fn sign_in(
+    current_user: &CurrentUser,
     email_value: Option<&str>,
     email_error: Option<&str>,
     password_error: Option<&str>,
@@ -23,7 +22,7 @@ pub fn sign_in(
         }
     };
 
-    base_layout("Sign In", "Sign in", content)
+    base_layout(current_user, "Sign In", "Sign in", content)
 }
 
 /// Renders a form input field with optional error styling and message

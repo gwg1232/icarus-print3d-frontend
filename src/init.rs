@@ -1,8 +1,10 @@
 use sqlx::{
-    postgres::{PgConnectOptions, PgPool, PgPoolOptions},
     ConnectOptions,
+    postgres::{PgConnectOptions, PgPool, PgPoolOptions},
 };
-use std::{str::FromStr, time::Duration};
+use std::str::FromStr;
+use tower_sessions::SessionManagerLayer;
+use tower_sessions_sqlx_store::PostgresStore;
 use tracing_subscriber::{EnvFilter, FmtSubscriber};
 
 pub fn init_logging() {
@@ -23,7 +25,7 @@ pub async fn init_database(database_url: &str) -> PgPool {
         .disable_statement_logging();
 
     let db = PgPoolOptions::new()
-        .acquire_timeout(Duration::from_secs(5))
+        .acquire_timeout(std::time::Duration::from_secs(5))
         .connect_with(options)
         .await
         .expect("Failed to connect to the database");
@@ -38,4 +40,20 @@ pub async fn init_database(database_url: &str) -> PgPool {
     tracing::debug!("Successfully migrated database");
 
     db
+}
+
+pub async fn init_session(db: PgPool) -> SessionManagerLayer<PostgresStore> {
+    tracing::debug!("Setting up session store");
+
+    let session_store = PostgresStore::new(db);
+
+    session_store
+        .migrate()
+        .await
+        .expect("Failed to migrate sessions");
+
+    tracing::debug!("Successfully migrated sessions");
+
+    SessionManagerLayer::new(session_store)
+        .with_expiry(tower_sessions::Expiry::OnInactivity(time::Duration::days(1)))
 }
