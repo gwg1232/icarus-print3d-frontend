@@ -45,5 +45,9 @@ tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
 # Configuration
 dotenvy = "0.15.7"
 
+# Sessions
+tower-sessions = "0.14.0"
+tower-sessions-sqlx-store = { version = "0.15.0", features = ["postgres"] }
+
 # Utilities
 regex = "1.11.3"
