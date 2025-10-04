@@ -3,10 +3,8 @@ use maud::{Markup, html};
 
 pub fn not_found(current_user: &CurrentUser) -> Markup {
     let content = html! {
-        h1 class="text-3xl font-bold mb-4" {
-            "This is not found page"
-        }
+        h1 class="text-6xl font-bold text-gray-900" { "404" }
     };
 
-    base_layout(current_user, "Page Not found", "Not found", content)
+    base_layout(current_user, "Page Not Found", "Page not found", content)
 }

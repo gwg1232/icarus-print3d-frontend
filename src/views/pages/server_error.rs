@@ -3,13 +3,9 @@ use maud::{Markup, html};
 
 pub fn server_error(current_user: &CurrentUser, message: &str) -> Markup {
     let content = html! {
-        h1 class="text-3xl font-bold mb-4" {
-            "Internal server error"
-        }
-        p class="text-gray-700" {
-            (message)
-        }
+        h1 class="text-6xl font-bold text-gray-900 mb-4" { "500" }
+        p class="text-red-600" { (message) }
     };
 
-    base_layout(current_user, "Server error", "Server error", content)
+    base_layout(current_user, "Server Error", "Server error", content)
 }

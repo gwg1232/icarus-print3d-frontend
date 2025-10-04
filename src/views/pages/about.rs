@@ -3,12 +3,8 @@ use maud::{Markup, html};
 
 pub fn about(current_user: &CurrentUser) -> Markup {
     let content = html! {
-        div class="container mx-auto px-4 py-8" {
-            h1 class="text-3xl font-bold mb-4" {
-                "About"
-            }
-        }
+        h1 class="text-4xl font-bold text-gray-900" { "About" }
     };
 
-    base_layout(current_user, "About", "About", content)
+    base_layout(current_user, "About", "About page", content)
 }

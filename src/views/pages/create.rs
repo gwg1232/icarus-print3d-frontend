@@ -3,10 +3,8 @@ use maud::{Markup, html};
 
 pub fn create(current_user: &CurrentUser) -> Markup {
     let content = html! {
-        h1 class="text-3xl font-bold mb-4" {
-            "This is create page"
-        }
+        h1 class="text-4xl font-bold text-gray-900" { "Create" }
     };
 
-    base_layout(current_user, "Create", "Create", content)
+    base_layout(current_user, "Create", "Create page", content)
 }

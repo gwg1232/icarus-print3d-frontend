@@ -1,5 +1,9 @@
 # Guidelines for Claude Code
 
+## Project Purpose
+
+This is a **template repository** for web applications. Keep all views and UI minimal and generic to serve as a starting point for various projects.
+
 ## Tech Stack
 
 - **Backend**: Axum (Rust web framework)
