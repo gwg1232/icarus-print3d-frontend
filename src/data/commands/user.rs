@@ -21,13 +21,10 @@ pub async fn create_user(db: &PgPool, email: &str, password: &str) -> Result<(),
     .execute(db)
     .await
     .map_err(|err| match err {
-        sqlx::Error::Database(e) => {
-            if e.constraint() == Some("users_email_key") {
-                DataError::FailedQuery("This email address is already used".to_string())
-            } else {
-                DataError::Internal(e.to_string())
-            }
+        sqlx::Error::Database(e) if e.constraint() == Some("users_email_key") => {
+            DataError::DuplicateEmail
         }
+        sqlx::Error::Database(e) => DataError::Internal(e.to_string()),
         e => DataError::Query(e),
     })?;
 

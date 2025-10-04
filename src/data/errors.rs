@@ -8,6 +8,9 @@ pub enum DataError {
     #[error("Query failed: {0}")]
     FailedQuery(String),
 
+    #[error("This email address is already used")]
+    DuplicateEmail,
+
     #[error("Internal error: {0}")]
     Internal(String),
 

@@ -4,20 +4,20 @@ use axum::{
 };
 use thiserror::Error;
 
-use crate::data::errors::DataError;
+use crate::{data::errors::DataError, views::pages::server_error};
 
 #[derive(Error, Debug)]
 pub enum HandlerError {
-    #[error("Database error")]
+    #[error("{0}")]
     Data(#[from] DataError),
 }
 
 impl IntoResponse for HandlerError {
     fn into_response(self) -> Response {
-        let status = match self {
-            Self::Data(_) => StatusCode::INTERNAL_SERVER_ERROR,
+        let (status, message) = match &self {
+            Self::Data(_) => (StatusCode::INTERNAL_SERVER_ERROR, self.to_string()),
         };
 
-        (status, self.to_string()).into_response()
+        (status, server_error::server_error(&message)).into_response()
     }
 }
