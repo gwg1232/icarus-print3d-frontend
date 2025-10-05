@@ -23,7 +23,7 @@ pub fn create_routes(state: AppState, session_layer: SessionManagerLayer<Postgre
         .nest(paths::actions::BASE, actions::action_routes())
         .fallback(handlers::fallback::handle_404)
         .with_state(state)
-        .layer(middleware::from_fn(middlewares::authenticate))
+        .layer(middleware::from_fn(middlewares::session_context))
         .layer(session_layer);
 
     Router::new()

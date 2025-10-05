@@ -1,8 +1,8 @@
 use super::navigation;
-use crate::{auth::CurrentUser, paths};
+use crate::{auth::CurrentUser, flash::FlashMessage, paths, views::components};
 use maud::{html, Markup, DOCTYPE};
 
-pub fn base_layout(current_user: &CurrentUser, title: &str, meta_description: &str, content: Markup) -> Markup {
+pub fn base_layout(current_user: &CurrentUser, flash: &Option<FlashMessage>, title: &str, meta_description: &str, content: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {
@@ -22,10 +22,14 @@ pub fn base_layout(current_user: &CurrentUser, title: &str, meta_description: &s
                 script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
                     integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
                     crossorigin="anonymous" {}
+
+                // Hyperscript CDN
+                script src="https://unpkg.com/hyperscript.org@0.9.14" {}
             }
             body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col" {
                 (navigation::navbar(current_user))
                 main class="flex-grow container mx-auto px-4 py-8" {
+                    (components::flash::flash(flash))
                     (content)
                 }
             }

@@ -6,16 +6,22 @@ use axum::{
 };
 use tower_sessions::Session;
 
-use crate::{auth::{CurrentUser, SESSION_USER_ID_KEY}, paths};
+use crate::{auth::{CurrentUser, SESSION_USER_ID_KEY}, flash::FlashMessage, paths};
 
-pub async fn authenticate(session: Session, mut req: Request, next: Next) -> Response {
+pub async fn session_context(session: Session, mut req: Request, next: Next) -> Response {
     let current_user = match session.get::<i32>(SESSION_USER_ID_KEY).await {
         Ok(Some(user_id)) => CurrentUser::Authenticated { user_id },
         Ok(None) => CurrentUser::Guest,
         Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, "Session error").into_response(),
     };
 
+    let flash = match FlashMessage::get(&session).await {
+        Ok(flash) => flash,
+        Err(_) => return (StatusCode::INTERNAL_SERVER_ERROR, "Session error").into_response(),
+    };
+
     req.extensions_mut().insert(current_user);
+    req.extensions_mut().insert(flash);
     next.run(req).await
 }
 

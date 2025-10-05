@@ -1,5 +1,6 @@
 use crate::{
     auth::CurrentUser,
+    flash::FlashMessage,
     handlers::dtos::user::{FIELD_EMAIL, FIELD_PASSWORD},
     paths,
     views::{components::form, layout::base::base_layout},
@@ -8,6 +9,7 @@ use maud::{html, Markup};
 
 pub fn sign_up(
     current_user: &CurrentUser,
+    flash: &Option<FlashMessage>,
     email_value: Option<&str>,
     email_error: Option<&str>,
     password_error: Option<&str>,
@@ -24,5 +26,5 @@ pub fn sign_up(
         }
     };
 
-    base_layout(current_user, "Sign Up", "Sign up", content)
+    base_layout(current_user, flash, "Sign Up", "Sign up", content)
 }

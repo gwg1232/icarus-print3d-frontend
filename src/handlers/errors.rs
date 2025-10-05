@@ -26,6 +26,6 @@ impl IntoResponse for HandlerError {
             | Self::Session(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error"),
         };
 
-        (status, server_error::server_error(&CurrentUser::Guest, message)).into_response()
+        (status, server_error::server_error(&CurrentUser::Guest, &None, message)).into_response()
     }
 }

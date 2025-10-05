@@ -1,6 +1,7 @@
 mod auth;
 mod config;
 mod data;
+mod flash;
 mod handlers;
 mod init;
 mod middlewares;
