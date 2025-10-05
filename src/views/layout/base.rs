@@ -2,7 +2,7 @@ use super::navigation;
 use crate::{auth::CurrentUser, paths};
 use maud::{html, Markup, DOCTYPE};
 
-pub(crate) fn base_layout(current_user: &CurrentUser, title: &str, meta_description: &str, content: Markup) -> Markup {
+pub fn base_layout(current_user: &CurrentUser, title: &str, meta_description: &str, content: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {

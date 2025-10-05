@@ -2,7 +2,7 @@ use crate::data::errors::DataError;
 use argon2::{Argon2, PasswordHash, PasswordVerifier};
 use sqlx::PgPool;
 
-pub(crate) async fn authenticate_user(db: &PgPool, email: &str, password: &str) -> Result<i32, DataError> {
+pub async fn authenticate_user(db: &PgPool, email: &str, password: &str) -> Result<i32, DataError> {
     let row = sqlx::query!(
         "SELECT user_id, password_hash FROM users WHERE email = $1",
         email

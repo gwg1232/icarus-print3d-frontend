@@ -1,7 +1,7 @@
 use crate::{auth::CurrentUser, paths};
 use maud::{html, Markup};
 
-pub(crate) fn navbar(current_user: &CurrentUser) -> Markup {
+pub fn navbar(current_user: &CurrentUser) -> Markup {
     html! {
         header class="bg-white shadow-sm" {
             nav class="container mx-auto px-4" {

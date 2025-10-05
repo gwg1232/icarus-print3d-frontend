@@ -1,3 +1,3 @@
-pub(crate) mod layout;
-pub(crate) mod components;
+pub mod layout;
+pub mod components;
 pub mod pages;

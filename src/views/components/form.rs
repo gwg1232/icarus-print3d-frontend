@@ -1,7 +1,7 @@
 use maud::{Markup, html};
 
 /// Renders a form input field with optional error styling and message
-pub(crate) fn input(
+pub fn input(
     input_type: &str,
     name: &str,
     placeholder: &str,
@@ -29,7 +29,7 @@ pub(crate) fn input(
 }
 
 /// Renders a primary submit button
-pub(crate) fn submit_button(text: &str) -> Markup {
+pub fn submit_button(text: &str) -> Markup {
     html! {
         button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700" {
             (text)

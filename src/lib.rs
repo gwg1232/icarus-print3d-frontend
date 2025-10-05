@@ -1,9 +1,0 @@
-pub(crate) mod auth;
-pub mod config;
-pub(crate) mod data;
-pub(crate) mod handlers;
-pub mod init;
-pub(crate) mod middlewares;
-pub(crate) mod paths;
-pub mod routes;
-pub(crate) mod views;

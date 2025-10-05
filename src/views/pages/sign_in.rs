@@ -6,7 +6,7 @@ use crate::{
 };
 use maud::{html, Markup};
 
-pub(crate) fn sign_in(
+pub fn sign_in(
     current_user: &CurrentUser,
     email_value: Option<&str>,
     email_error: Option<&str>,

@@ -1,7 +1,14 @@
-use maud_tailwind_htmx_axum_sqlx_postgres::{
-    config::{AppConfig, AppState},
-    init, routes,
-};
+mod auth;
+mod config;
+mod data;
+mod handlers;
+mod init;
+mod middlewares;
+mod paths;
+mod routes;
+mod views;
+
+use config::{AppConfig, AppState};
 
 #[tokio::main]
 async fn main() {
