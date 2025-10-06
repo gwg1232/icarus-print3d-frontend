@@ -1,5 +1,5 @@
 default: run
 
 run:
-    git pull
+    git pull --rebase
     RUST_LOG=debug cargo watch -c -x run
