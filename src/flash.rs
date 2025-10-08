@@ -23,7 +23,6 @@ impl FlashMessage {
         }
     }
 
-    #[allow(dead_code)]
     pub fn error(message: impl Into<String>) -> Self {
         Self {
             message: message.into(),
@@ -38,11 +37,16 @@ impl FlashMessage {
         }
     }
 
-    pub async fn set(self, session: &tower_sessions::Session) -> Result<(), tower_sessions::session::Error> {
+    pub async fn set(
+        self,
+        session: &tower_sessions::Session,
+    ) -> Result<(), tower_sessions::session::Error> {
         session.insert(FLASH_MESSAGE_KEY, self).await
     }
 
-    pub async fn get(session: &tower_sessions::Session) -> Result<Option<Self>, tower_sessions::session::Error> {
+    pub async fn get(
+        session: &tower_sessions::Session,
+    ) -> Result<Option<Self>, tower_sessions::session::Error> {
         session.remove(FLASH_MESSAGE_KEY).await
     }
 }

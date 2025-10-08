@@ -32,7 +32,6 @@ pub async fn post_forms_sign_in(
 
     match queries::user::authenticate_user(&db, &form.email, &form.password).await {
         Ok(user_id) => {
-            tracing::info!("Sign in successful for user_id: {}", user_id);
             session.insert(SESSION_USER_ID_KEY, user_id).await?;
             FlashMessage::success("Successfully signed in!").set(&session).await?;
             Ok(Redirect::to(pages::ROOT).into_response())

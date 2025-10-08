@@ -26,7 +26,6 @@ pub async fn post_forms_sign_up(
 
     match commands::user::create_user(&db, &form.email, &form.password).await {
         Ok(_) => {
-            tracing::info!("Sign up successful for email: {}", form.email);
             FlashMessage::success("Account created successfully! Please sign in.").set(&session).await?;
             Ok(Redirect::to(pages::SIGN_IN).into_response())
         }

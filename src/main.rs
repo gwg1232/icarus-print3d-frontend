@@ -20,9 +20,6 @@ async fn main() {
     let session_layer = init::init_session(db.clone()).await;
     let state = AppState { db };
 
-    tracing::info!("Server is starting...");
-    tracing::info!("Listening at {}", config.server_addr);
-
     let listener = tokio::net::TcpListener::bind(&config.server_addr)
         .await
         .unwrap();

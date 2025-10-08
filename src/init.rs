@@ -18,8 +18,6 @@ pub fn init_logging() {
 }
 
 pub async fn init_database(database_url: &str) -> PgPool {
-    tracing::debug!("Setting up database connection");
-
     let options = PgConnectOptions::from_str(database_url)
         .expect("Failed to parse database URL")
         .disable_statement_logging();
@@ -30,29 +28,21 @@ pub async fn init_database(database_url: &str) -> PgPool {
         .await
         .expect("Failed to connect to the database");
 
-    tracing::debug!("Successfully connected to database");
-
     sqlx::migrate!()
         .run(&db)
         .await
         .expect("Failed to run migrations");
 
-    tracing::debug!("Successfully migrated database");
-
     db
 }
 
 pub async fn init_session(db: PgPool) -> SessionManagerLayer<PostgresStore> {
-    tracing::debug!("Setting up session store");
-
     let session_store = PostgresStore::new(db);
 
     session_store
         .migrate()
         .await
         .expect("Failed to migrate sessions");
-
-    tracing::debug!("Successfully migrated sessions");
 
     SessionManagerLayer::new(session_store)
         .with_expiry(tower_sessions::Expiry::OnInactivity(time::Duration::days(1)))
