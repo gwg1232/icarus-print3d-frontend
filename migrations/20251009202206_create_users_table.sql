@@ -8,8 +8,6 @@ CREATE TABLE users (
     updated_at timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_users_email ON users(email);
-
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
