@@ -53,6 +53,9 @@ pub mod forms {
     define_nested_routes!("/forms", {
         SIGN_UP => "/sign_up",
         SIGN_IN => "/sign_in",
+        CREATE_TODO => "/create_todo",
+        TOGGLE_TODO => "/toggle_todo",
+        DELETE_TODO => "/delete_todo",
     });
 }
 

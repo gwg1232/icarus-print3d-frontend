@@ -35,6 +35,12 @@ pub async fn require_authentication(req: Request, next: Next) -> Response {
             );
             res
         }
-        _ => Redirect::to(paths::pages::SIGN_IN).into_response(),
+        _ => {
+            let session = req.extensions().get::<Session>().cloned();
+            if let Some(session) = session {
+                let _ = FlashMessage::error("Please sign in to continue").set(&session).await;
+            }
+            Redirect::to(paths::pages::SIGN_IN).into_response()
+        }
     }
 }

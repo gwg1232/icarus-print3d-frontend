@@ -1,5 +1,5 @@
-CREATE TABLE todo (
-    id SERIAL PRIMARY KEY,
+CREATE TABLE todos (
+    todo_id SERIAL PRIMARY KEY,
     task TEXT NOT NULL,
     is_done BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

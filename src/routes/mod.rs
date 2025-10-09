@@ -13,21 +13,32 @@ use crate::{config::AppState, handlers, middlewares, paths};
 use http_tracing::create_http_trace_layer;
 
 pub fn create_routes(state: AppState, session_layer: SessionManagerLayer<PostgresStore>) -> Router {
-    let protected_routes =
-        pages::protected_routes().layer(middleware::from_fn(middlewares::require_authentication));
+    Router::new()
+        .nest_service(paths::static_files::BASE, ServeDir::new("static"))
+        .merge(app_routes(state, session_layer))
+        .layer(create_http_trace_layer())
+}
 
-    let app_routes = Router::new()
-        .merge(pages::public_routes())
-        .merge(protected_routes)
-        .nest(paths::forms::BASE, forms::form_routes())
-        .nest(paths::actions::BASE, actions::action_routes())
+fn app_routes(state: AppState, session_layer: SessionManagerLayer<PostgresStore>) -> Router {
+    Router::new()
+        .merge(public_routes())
+        .merge(protected_routes())
         .fallback(handlers::fallback::handle_404)
         .with_state(state)
         .layer(middleware::from_fn(middlewares::session_context))
-        .layer(session_layer);
+        .layer(session_layer)
+}
 
+fn public_routes() -> Router<AppState> {
     Router::new()
-        .nest_service(paths::static_files::BASE, ServeDir::new("static"))
-        .merge(app_routes)
-        .layer(create_http_trace_layer())
+        .merge(pages::public_page_routes())
+        .nest(paths::forms::BASE, forms::public_form_routes())
+}
+
+fn protected_routes() -> Router<AppState> {
+    Router::new()
+        .merge(pages::protected_page_routes())
+        .nest(paths::forms::BASE, forms::protected_form_routes())
+        .nest(paths::actions::BASE, actions::protected_action_routes())
+        .layer(middleware::from_fn(middlewares::require_authentication))
 }
