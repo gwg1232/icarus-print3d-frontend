@@ -5,7 +5,6 @@ pub enum DataError {
     #[error("Database error")]
     Database(#[from] sqlx::Error),
 
-    #[allow(dead_code)]
     #[error("{0}")]
     NotFound(&'static str),
 

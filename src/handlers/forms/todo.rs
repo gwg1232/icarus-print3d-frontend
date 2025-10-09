@@ -21,9 +21,7 @@ pub async fn post_forms_create_todo(
     session: Session,
     Form(form): Form<CreateTodoForm>,
 ) -> Result<Response, HandlerError> {
-    let CurrentUser::Authenticated { user_id } = current_user else {
-        unreachable!("Protected route accessed by guest user");
-    };
+    let user_id = current_user.require_authenticated();
 
     if let Err(validation_errors) = form.validate() {
         return Ok(render_validation_errors(&current_user, &form, &validation_errors));
@@ -39,9 +37,7 @@ pub async fn post_forms_toggle_todo(
     Extension(current_user): Extension<CurrentUser>,
     Form(form): Form<TodoIdForm>,
 ) -> Result<Response, HandlerError> {
-    let CurrentUser::Authenticated { user_id } = current_user else {
-        unreachable!("Protected route accessed by guest user");
-    };
+    let user_id = current_user.require_authenticated();
 
     commands::todo::toggle_todo(&db, user_id, form.todo_id).await?;
     Ok(Redirect::to(pages::TODOS).into_response())
@@ -53,9 +49,7 @@ pub async fn post_forms_delete_todo(
     session: Session,
     Form(form): Form<TodoIdForm>,
 ) -> Result<Response, HandlerError> {
-    let CurrentUser::Authenticated { user_id } = current_user else {
-        unreachable!("Protected route accessed by guest user");
-    };
+    let user_id = current_user.require_authenticated();
 
     commands::todo::delete_todo(&db, user_id, form.todo_id).await?;
     FlashMessage::success("Todo deleted successfully").set(&session).await?;

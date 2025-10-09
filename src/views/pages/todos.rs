@@ -1,8 +1,8 @@
 use crate::{
     auth::CurrentUser,
-    data::queries::todo::Todo,
     flash::FlashMessage,
     handlers::dtos::todo::FIELD_TASK,
+    models::Todo,
     paths,
     views::{components::form, layout::base::base_layout},
 };

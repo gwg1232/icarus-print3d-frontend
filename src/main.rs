@@ -5,6 +5,7 @@ mod flash;
 mod handlers;
 mod init;
 mod middlewares;
+mod models;
 mod paths;
 mod routes;
 mod views;
