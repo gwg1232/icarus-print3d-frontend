@@ -14,7 +14,7 @@ tokio = { version = "1.47.1", features = ["full"] }
 # Web
 # ============================================================================
 ## Framework
-axum = { version = "0.8.6", features = ["macros"] }
+axum = { version = "0.8.6", features = ["macros", "multipart"] }
 tower = "0.5.2"
 tower-http = { version = "0.6.6", features = ["fs", "trace"] }
 
@@ -34,6 +34,8 @@ sqlx = { version = "0.8.6", features = [
     "postgres",
     "runtime-tokio",
     "tls-rustls",
+    "chrono",
+    "rust_decimal",
 ] }
 
 ## Serialization
@@ -42,6 +44,10 @@ serde = { version = "1.0.228", features = ["derive"] }
 ## Date/Time
 chrono = { version = "0.4", features = ["serde"] }
 time = "0.3.44"
+
+## Decimal Numbers (for precise pricing)
+rust_decimal = { version = "1.37.0", features = ["serde"] }
+rust_decimal_macros = "1.37.0"
 
 # ============================================================================
 # Security & Validation

@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE print_orders\n        SET status = $1\n        WHERE order_id = $2\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "996aa38c10d87f8523e34e6529f4174484adfb911b142efce1fa6475211c87c5"
+}

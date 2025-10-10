@@ -1,0 +1,118 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT\n            order_id, user_id, file_name, material, color, quality,\n            infill_percentage, quantity,\n            unit_price as \"unit_price: rust_decimal::Decimal\",\n            total_price as \"total_price: rust_decimal::Decimal\",\n            delivery_name, delivery_phone, delivery_address, delivery_notes,\n            status, payment_status,\n            created_at as \"created_at: chrono::DateTime<chrono::Utc>\"\n        FROM print_orders\n        WHERE user_id = $1\n        ORDER BY created_at DESC\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "order_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "file_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "material",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "color",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "quality",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "infill_percentage",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 7,
+        "name": "quantity",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 8,
+        "name": "unit_price: rust_decimal::Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 9,
+        "name": "total_price: rust_decimal::Decimal",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 10,
+        "name": "delivery_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 11,
+        "name": "delivery_phone",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 12,
+        "name": "delivery_address",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 13,
+        "name": "delivery_notes",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 14,
+        "name": "status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 15,
+        "name": "payment_status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 16,
+        "name": "created_at: chrono::DateTime<chrono::Utc>",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "d7c3793b4e26be36157707b1df389afcb97eb0a9612236084d57663c88bc669e"
+}

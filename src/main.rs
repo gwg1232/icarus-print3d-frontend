@@ -6,6 +6,7 @@ mod handlers;
 mod init;
 mod middlewares;
 mod paths;
+mod pricing;
 mod routes;
 mod views;
 

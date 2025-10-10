@@ -13,4 +13,6 @@ pub fn protected_page_routes() -> Router<AppState> {
     Router::new()
         .route(paths::pages::CREATE, get(pages::get_create))
         .route(paths::pages::TODOS, get(pages::get_todos))
+        .route(paths::print_orders::BASE, get(pages::get_print_orders))
+        .route(paths::print_orders::new_order::PATH, get(pages::get_new_order))
 }

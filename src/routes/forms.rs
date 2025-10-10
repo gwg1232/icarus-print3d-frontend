@@ -12,4 +12,8 @@ pub fn protected_form_routes() -> Router<AppState> {
         .route(relative::CREATE_TODO, post(forms::post_forms_create_todo))
         .route(relative::TOGGLE_TODO, post(forms::post_forms_toggle_todo))
         .route(relative::DELETE_TODO, post(forms::post_forms_delete_todo))
+        .route(
+            "/print_order",
+            post(forms::post_forms_print_order),
+        )
 }

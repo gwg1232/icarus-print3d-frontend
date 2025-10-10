@@ -49,6 +49,14 @@ pub mod pages {
     pub const TODOS: &str = "/todos";
 }
 
+pub mod print_orders {
+    pub const BASE: &str = "/print_orders";
+
+    pub mod new_order {
+        pub const PATH: &str = "/print_orders/new";
+    }
+}
+
 pub mod forms {
     define_nested_routes!("/forms", {
         SIGN_UP => "/sign_up",
@@ -57,6 +65,10 @@ pub mod forms {
         TOGGLE_TODO => "/toggle_todo",
         DELETE_TODO => "/delete_todo",
     });
+
+    pub mod print_order {
+        pub const PATH: &str = "/forms/print_order";
+    }
 }
 
 pub mod actions {
